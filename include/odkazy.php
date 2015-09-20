@@ -1,0 +1,439 @@
+<?
+function Odkaz($soubor, $nazev, $podminky="")
+{
+  global $kod;
+  return "<A class=\"odkaz\" HREF = \"".c_Cesta.$soubor."?kod=$kod$podminky\">$nazev</A><BR>";
+}
+
+function Odkaz_NewTarget($soubor, $nazev)
+{
+  global $kod;
+  return "<A class=\"odkaz\" HREF = \"".c_Cesta.$soubor."\" target = \"_new\" >$nazev</A><BR>";
+}
+
+
+function Nazev($nazev)
+{
+  return "<div style=\"line-height: 5px\">&nbsp;</div><div style=\"border-top: 1px solid #0C1072; line-height: 5px\">&nbsp;</div><span class=\"nadpis\">$nazev</span><br>";
+}
+
+
+$pom = explode("|", $kod);
+$skupina = $pom[1];
+
+$prava=6;
+$SQL = "select prava from skupiny where id='$skupina'";
+if(DB_select($SQL, $vyst, $pocet))
+  if($zaz=mysql_fetch_array($vyst))
+  {
+     $prava=$zaz["prava"];
+  }
+
+
+switch($prava):
+  /* admin */
+  case 1:
+      echo Odkaz("logout.php", "Odhlásit se z IS");
+    /*echo Odkaz("help.php", "V¹echno o IS");*/
+     echo Odkaz("is_main.php", "Novinky");
+     echo Odkaz("novinky_edit.php", "Editace novinek");
+     echo Odkaz("hledani.php", "Vyhledávání souborù na ISu");
+     echo Nazev("Zamìstnanci");
+     echo Odkaz("ucitele.php", "Seznam zamìstnancù");
+     echo Odkaz("ucitele_udaje_admin.php", "Opravit údaje zamìstnancù");  /* !!! nutno pozdeji opravit na ucitele_udaje_admin */
+     echo Odkaz("ucitele_novy.php", "Pøidat zamìstnance");
+     echo Odkaz("ucitele_smaz.php", "Odstranit zamìstnance");
+     echo Odkaz("ucitele_foto.php", "Fotografie zamìstnancù");
+     echo Nazev("Vzkazy");
+     echo Odkaz("vzkazy_vedeni.php", "Zobrazit vzkazy vedení");
+     echo Odkaz("vzkazy_komisi.php", "Zobrazit vzkazy PK");
+     echo Odkaz("vzkazy.php", "Zobrazit vzkazy");
+     echo Odkaz("vzkazy_odeslat.php", "Odeslat vzkaz");
+     echo Odkaz("vzkazy_editace.php", "Mnou odeslané vzkazy");
+     echo Odkaz("vzkazy_vsechny.php", "Zobrazit v¹echny vzkazy");
+     echo Nazev("Soubory");
+     echo Odkaz("soubory.php", "Zobrazit soubory");
+     echo Odkaz("soubory_odeslat.php", "Ulo¾it soubor");
+     echo Odkaz("soubory_editace.php", "Mnou ulo¾ené soubory");
+     echo Odkaz("soubory_vsechny.php", "V¹echny soubory");
+     echo Odkaz("soubory_edit_vse.php", "Mazání lib. souborù");
+     echo Nazev("Plánování");
+     echo Odkaz_NewTarget("./is/rozvrh/rozvrh.htm", "Rozvrhy hodin");
+     echo Odkaz_NewTarget("./is/suplovani/suplov.htm", "Suplování");
+     echo Odkaz("plan_kal.php","Kalendáø akcí");
+     echo Odkaz("plan_kal_editace.php", "Editace kalendáøe");
+     echo Odkaz("plan_uc.php","Zprávy pro vedení");
+     echo Odkaz("zvoneni.php", "Zvonìní");
+  /*   echo Nazev("Informaèní centrum");
+     echo Odkaz("ic.php", "IC");
+     echo Odkaz("ic_katalog_akt.php", "IC - aktualizace");      */
+     /*echo Odkaz("plan_kal_opr.php", "Zmìna tabulek kal.");*/
+     echo Nazev("Pro uèitele");
+     echo Odkaz("uc_forms.php", "V¹echny kategorie", "&typ=vse");
+     echo Odkaz("uc_forms.php", "Pokyny øeditele", "&typ=sdeleni_red");
+     echo Odkaz("uc_forms.php", "Pokyny zástupcù", "&typ=sdeleni_zast");
+     echo Odkaz("uc_forms.php", "Formuláøe pro uèitele", "&typ=formular");
+     echo Odkaz("uc_forms.php", "Seznamy studentù", "&typ=seznam");
+     echo Odkaz("uc_forms.php", "Vnitøní smìrnice", "&typ=smernice");
+     echo Odkaz("uc_forms.php", "Organizaèní&nbsp;zabezpeèení&nbsp;VVP", "&typ=organizace");
+     echo Odkaz("uc_forms.php", "Pracovní náplnì", "&typ=naplne");
+     echo Odkaz("uc_forms.php", "SRPG", "&typ=srpg");
+     echo Odkaz("uc_forms.php", "Ostatní", "&typ=ostatni");
+     echo Odkaz("uc_edit.php", "Aktualizace&nbsp;souborù");
+
+     echo Nazev("Pro studenty");
+     echo Odkaz("g_forms.php", "Vnitøní pøedpisy", "&typ=g_predpisy");
+     echo Odkaz("g_forms.php", "Formuláøe pro studenty", "&typ=g_formular");
+     echo Odkaz("g_forms.php", "Krou¾ky", "&typ=g_krouzky");
+     echo "Volitelné pøedmìty:<br>";
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Seznam pøedmìtù", "&typ=g_vol_seznam");
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Náplnì&nbsp;jednoletých&nbsp;pøedmìtù", "&typ=g_vol_naplne1");
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Náplnì&nbsp;dvouletých&nbsp;pøedmìtù", "&typ=g_vol_naplne2");
+     echo Odkaz("g_forms.php", "Ostatní", "&typ=g_ostatni");
+     echo Odkaz("g_edit.php", "Aktualizace&nbsp;souborù");
+     
+     echo Nazev("Pro admina");
+     echo Odkaz("admin_data.php", "Správa dat");
+
+     echo Nazev("Kraj&nbsp;-&nbsp;¹kolství");
+     echo Odkaz("k_forms.php", "Zpravodaj KÚ", "&typ=k_zpravodaj");
+     echo Odkaz("k_forms.php", "Smìrnice KÚ", "&typ=k_smernice");
+     echo Odkaz("k_forms.php", "Ostatní", "&typ=k_ostatni");
+     echo Odkaz("k_edit.php", "Aktualizace&nbsp;souborù");
+     echo Odkaz("k_edit_prilohy.php", "Aktualizace&nbsp;pøíloh");
+   break;
+
+/* øeditel, zastupci */
+  case 2:
+      echo Odkaz("logout.php", "Odhlásit se z is");
+    /*echo Odkaz("help.php", "V¹echno o is");*/
+     echo Odkaz("is_main.php", "Novinky");
+     echo Nazev("Zamìstnanci");
+     echo Odkaz("ucitele.php", "Seznam zamìstnancù");
+     echo Odkaz("ucitele_udaje_admin.php", "Opravit údaje zamìstnancù");  /* !!! nutno pozdeji opravit na ucitele_udaje_admin */
+     echo Odkaz("ucitele_novy.php", "Pøidat zamìstnance");
+     echo Odkaz("ucitele_smaz.php", "Odstranit zamìstnance");
+     echo Odkaz("ucitele_foto.php", "Fotografie zamìstnancù");
+     echo Nazev("Vzkazy");
+     echo Odkaz("vzkazy_vedeni.php", "Zobrazit vzkazy vedení");
+     echo Odkaz("vzkazy_komisi.php", "Zobrazit vzkazy PK");
+     echo Odkaz("vzkazy.php", "Zobrazit vzkazy");
+     echo Odkaz("vzkazy_odeslat.php", "Odeslat vzkaz");
+     echo Odkaz("vzkazy_editace.php", "Mnou odeslané vzkazy");
+     echo Nazev("Soubory");
+     echo Odkaz("soubory.php", "Zobrazit soubory");
+     echo Odkaz("soubory_odeslat.php", "Ulo¾it soubor");
+     echo Odkaz("soubory_editace.php", "Mnou ulo¾ené soubory");
+     echo Nazev("Plánování");
+     echo Odkaz_NewTarget("./is/rozvrh/rozvrh.htm", "Rozvrhy hodin");
+     echo Odkaz_NewTarget("./is/suplovani/suplov.htm", "Suplování");
+     echo Odkaz("plan_kal.php","Kalendáø akcí");
+     echo Odkaz("plan_kal_editace.php", "Editace kalendáøe");
+     echo Odkaz("plan_uc.php","Zprávy pro vedení");
+     echo Odkaz("zvoneni.php", "Zvonìní");
+    /* echo Nazev("Informaèní centrum");
+     echo Odkaz("ic.php", "IC");
+     echo Odkaz("ic_katalog_akt.php", "IC - aktualizace");    */
+     /*echo Odkaz("plan_kal_opr.php", "Zmìna tabulek kal.");*/
+     echo Nazev("Pro uèitele");
+     echo Odkaz("uc_forms.php", "V¹echny kategorie", "&typ=vse");
+     echo Odkaz("uc_forms.php", "Pokyny øeditele", "&typ=sdeleni_red");
+     echo Odkaz("uc_forms.php", "Pokyny zástupcù", "&typ=sdeleni_zast");
+     echo Odkaz("uc_forms.php", "Formuláøe pro uèitele", "&typ=formular");
+     echo Odkaz("uc_forms.php", "Seznamy studentù", "&typ=seznam");
+     echo Odkaz("uc_forms.php", "Vnitøní smìrnice", "&typ=smernice");
+     echo Odkaz("uc_forms.php", "Organizaèní&nbsp;zabezpeèení&nbsp;VVP", "&typ=organizace");
+     echo Odkaz("uc_forms.php", "Pracovní náplnì", "&typ=naplne");
+     echo Odkaz("uc_forms.php", "SRPG", "&typ=srpg");
+     echo Odkaz("uc_forms.php", "Ostatní", "&typ=ostatni");
+     echo Odkaz("uc_edit.php", "Aktualizace&nbsp;souborù");
+
+     echo Nazev("Pro studenty");
+     echo Odkaz("g_forms.php", "Vnitøní pøedpisy", "&typ=g_predpisy");
+     echo Odkaz("g_forms.php", "Formuláøe pro studenty", "&typ=g_formular");
+     echo Odkaz("g_forms.php", "Krou¾ky", "&typ=g_krouzky");
+     echo "Volitelné pøedmìty:<br>";
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Seznam pøedmìtù", "&typ=g_vol_seznam");
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Náplnì&nbsp;jednoletých&nbsp;pøedmìtù", "&typ=g_vol_naplne1");
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Náplnì&nbsp;dvouletých&nbsp;pøedmìtù", "&typ=g_vol_naplne2");
+     echo Odkaz("g_forms.php", "Ostatní", "&typ=g_ostatni");
+     echo Odkaz("g_edit.php", "Aktualizace&nbsp;souborù");
+
+     echo Nazev("Kraj&nbsp;-&nbsp;¹kolství");
+     echo Odkaz("k_forms.php", "Zpravodaj KÚ", "&typ=k_zpravodaj");
+     echo Odkaz("k_forms.php", "Smìrnice KÚ", "&typ=k_smernice");
+     echo Odkaz("k_forms.php", "Ostatní", "&typ=k_ostatni");
+     echo Odkaz("k_edit.php", "Aktualizace&nbsp;souborù");
+     echo Odkaz("k_edit_prilohy.php", "Aktualizace&nbsp;pøíloh");
+/*
+     echo Nazev("Oficiální sdìlení øeditele");
+     echo Odkaz("sdeleni.php", "Zobrazit sdìlení");
+     echo Odkaz("sdeleni_aktual.php", "Aktualizovat sdìlení");
+     echo Nazev("Formuláøe pro uèitele");
+     echo Odkaz("forms.php", "Zobrazit formuláøe");
+     echo Odkaz("forms_aktual.php", "Aktualizovat formuláøe");
+     echo Nazev("Pro studenty");
+     echo Odkaz("povinnost.php", "Povinnosti studentù");
+     echo Odkaz("povinnost_aktual.php", "Aktualizovat&nbsp;povinnosti");    */
+  break;
+
+/* sekretariat */
+  case 3:
+      echo Odkaz("logout.php", "Odhlásit se z is");
+    /*echo Odkaz("help.php", "V¹echno o is");*/
+     echo Odkaz("is_main.php", "Novinky");
+
+     echo Nazev("Zamìstnanci");
+     echo Odkaz("ucitele.php", "Seznam zamìstnancù");
+     echo Odkaz("ucitele_udaje_admin.php", "Opravit údaje zamìstnancù");  /* !!! nutno pozdeji opravit na ucitele_udaje_admin */
+     echo Odkaz("ucitele_novy.php", "Pøidat zamìstnance");
+     echo Odkaz("ucitele_smaz.php", "Odstranit zamìstnance");
+     echo Odkaz("ucitele_foto.php", "Fotografie zamìstnancù");
+
+     echo Nazev("Vzkazy");
+     echo Odkaz("vzkazy_vedeni.php", "Zobrazit vzkazy vedení");
+     echo Odkaz("vzkazy_komisi.php", "Zobrazit vzkazy PK");
+     echo Odkaz("vzkazy.php", "Zobrazit vzkazy");
+     echo Odkaz("vzkazy_odeslat.php", "Odeslat vzkaz");
+     echo Odkaz("vzkazy_editace.php", "Mnou odeslané vzkazy");
+
+     echo Nazev("Soubory");
+     echo Odkaz("soubory.php", "Zobrazit soubory");
+     echo Odkaz("soubory_odeslat.php", "Ulo¾it soubor");
+     echo Odkaz("soubory_editace.php", "Mnou ulo¾ené soubory");
+
+     echo Nazev("Plánování");
+     echo Odkaz_NewTarget("./is/rozvrh/rozvrh.htm", "Rozvrhy hodin");
+     echo Odkaz_NewTarget("./is/suplovani/suplov.htm", "Suplování");
+     echo Odkaz("plan_kal.php","Kalendáø akcí");
+     echo Odkaz("plan_kal_editace.php", "Editace kalendáøe");
+     echo Odkaz("plan_uc.php","Zprávy pro vedení");
+     echo Odkaz("zvoneni.php", "Zvonìní");
+ /*    echo Nazev("Informaèní centrum");
+     echo Odkaz("ic.php", "IC");
+     echo Odkaz("ic_katalog_akt.php", "IC - aktualizace");    */
+     /*echo Odkaz("plan_kal_opr.php", "Zmìna tabulek kal.");*/
+
+     echo Nazev("Pro uèitele");
+     echo Odkaz("uc_forms.php", "V¹echny kategorie", "&typ=vse");
+     echo Odkaz("uc_forms.php", "Pokyny øeditele", "&typ=sdeleni_red");
+     echo Odkaz("uc_forms.php", "Pokyny zástupcù", "&typ=sdeleni_zast");
+     echo Odkaz("uc_forms.php", "Formuláøe pro uèitele", "&typ=formular");
+     echo Odkaz("uc_forms.php", "Seznamy studentù", "&typ=seznam");
+     echo Odkaz("uc_forms.php", "Vnitøní smìrnice", "&typ=smernice");
+     echo Odkaz("uc_forms.php", "Organizaèní&nbsp;zabezpeèení&nbsp;VVP", "&typ=organizace");
+     echo Odkaz("uc_forms.php", "Pracovní náplnì", "&typ=naplne");
+     echo Odkaz("uc_forms.php", "SRPG", "&typ=srpg");
+     echo Odkaz("uc_forms.php", "Ostatní", "&typ=ostatni");
+     echo Odkaz("uc_edit.php", "Aktualizace&nbsp;souborù");
+     
+     echo Nazev("Pro studenty");
+     echo Odkaz("g_forms.php", "Vnitøní pøedpisy", "&typ=g_predpisy");
+     echo Odkaz("g_forms.php", "Formuláøe pro studenty", "&typ=g_formular");
+     echo Odkaz("g_forms.php", "Krou¾ky", "&typ=g_krouzky");
+     echo "Volitelné pøedmìty:<br>";
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Seznam pøedmìtù", "&typ=g_vol_seznam");
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Náplnì&nbsp;jednoletých&nbsp;pøedmìtù", "&typ=g_vol_naplne1");
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Náplnì&nbsp;dvouletých&nbsp;pøedmìtù", "&typ=g_vol_naplne2");
+     echo Odkaz("g_forms.php", "Ostatní", "&typ=g_ostatni");
+     echo Odkaz("g_edit.php", "Aktualizace&nbsp;souborù");
+
+     echo Nazev("Kraj&nbsp;-&nbsp;¹kolství");
+     echo Odkaz("k_forms.php", "Zpravodaj KÚ", "&typ=k_zpravodaj");
+     echo Odkaz("k_forms.php", "Smìrnice KÚ", "&typ=k_smernice");
+     echo Odkaz("k_forms.php", "Ostatní", "&typ=k_ostatni");
+     echo Odkaz("k_edit.php", "Aktualizace&nbsp;souborù");
+     echo Odkaz("k_edit_prilohy.php", "Aktualizace&nbsp;pøíloh");
+
+/*     echo Nazev("Suplování");
+     echo Odkaz("supl.php", "Zobrazit suplování");
+     echo Odkaz("supl_aktual.php", "Aktualizovat suplování");
+     echo Nazev("Oficiální sdìlení øeditele");
+     echo Odkaz("sdeleni.php", "Zobrazit sdìlení");
+     echo Odkaz("sdeleni_aktual.php", "Aktualizovat sdìlení");
+     echo Nazev("Formuláøe pro uèitele");
+     echo Odkaz("forms.php", "Zobrazit formuláøe");
+     echo Odkaz("forms_aktual.php", "Aktualizovat formuláøe");
+     echo Nazev("Pro studenty");
+     echo Odkaz("povinnost.php", "Povinnosti studentù");
+     echo Odkaz("povinnost_aktual.php", "Aktualizovat&nbsp;povinnosti");   */
+  break;
+
+/* IC */
+  case 4:
+     echo Odkaz("logout.php", "Odhlásit se z is");
+    /*echo Odkaz("help.php", "V¹echno o is");*/
+     echo Odkaz("is_main.php", "Novinky");
+     echo Nazev("Zamìstnanci");
+     echo Odkaz("ucitele.php", "Seznam zamìstnancù");
+     echo Odkaz("ucitele_udaje.php", "Opravit své údaje");  /* !!! nutno pozdeji opravit na ucitele_udaje_admin */
+     echo Nazev("Vzkazy");
+     echo Odkaz("vzkazy_vedeni.php", "Zobrazit vzkazy vedení");
+     echo Odkaz("vzkazy_komisi.php", "Zobrazit vzkazy PK");
+     echo Odkaz("vzkazy.php", "Zobrazit vzkazy");
+     echo Odkaz("vzkazy_odeslat.php", "Odeslat vzkaz");
+     echo Odkaz("vzkazy_editace.php", "Mnou odeslané vzkazy");
+     echo Nazev("Soubory");
+     echo Odkaz("soubory.php", "Zobrazit soubory");
+     echo Odkaz("soubory_odeslat.php", "Ulo¾it soubor");
+     echo Odkaz("soubory_editace.php", "Mnou ulo¾ené soubory");
+     echo Nazev("Plánování");
+     echo Odkaz_NewTarget("./is/rozvrh/rozvrh.htm", "Rozvrhy hodin");
+     echo Odkaz_NewTarget("./is/suplovani/suplov.htm", "Suplování");
+     echo Odkaz("plan_kal.php","Kalendáø akcí");
+     echo Odkaz("plan_uc.php","Zprávy pro vedení");
+     echo Odkaz("zvoneni.php", "Zvonìní");
+     echo Nazev("Informaèní centrum");
+     echo Odkaz("ic.php", "IC");
+     echo Odkaz("ic_katalog_akt.php", "IC - aktualizace");
+     /*echo Odkaz("plan_kal_opr.php", "Zmìna tabulek kal.");*/
+     echo Nazev("Pro uèitele");
+     echo Odkaz("uc_forms.php", "V¹echny kategorie", "&typ=vse");
+     echo Odkaz("uc_forms.php", "Pokyny øeditele", "&typ=sdeleni_red");
+     echo Odkaz("uc_forms.php", "Pokyny zástupcù", "&typ=sdeleni_zast");
+     echo Odkaz("uc_forms.php", "Formuláøe pro uèitele", "&typ=formular");
+     echo Odkaz("uc_forms.php", "Seznamy studentù", "&typ=seznam");
+     echo Odkaz("uc_forms.php", "Vnitøní smìrnice", "&typ=smernice");
+     echo Odkaz("uc_forms.php", "Organizaèní&nbsp;zabezpeèení&nbsp;VVP", "&typ=organizace");
+     echo Odkaz("uc_forms.php", "Pracovní náplnì", "&typ=naplne");
+     echo Odkaz("uc_forms.php", "SRPG", "&typ=srpg");
+     echo Odkaz("uc_forms.php", "Ostatní", "&typ=ostatni");
+
+     echo Nazev("Pro studenty");
+     echo Odkaz("g_forms.php", "Vnitøní pøedpisy", "&typ=g_predpisy");
+     echo Odkaz("g_forms.php", "Formuláøe pro studenty", "&typ=g_formular");
+     echo Odkaz("g_forms.php", "Krou¾ky", "&typ=g_krouzky");
+     echo "Volitelné pøedmìty:<br>";
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Seznam pøedmìtù", "&typ=g_vol_seznam");
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Náplnì&nbsp;jednoletých&nbsp;pøedmìtù", "&typ=g_vol_naplne1");
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Náplnì&nbsp;dvouletých&nbsp;pøedmìtù", "&typ=g_vol_naplne2");
+     echo Odkaz("g_forms.php", "Ostatní", "&typ=g_ostatni");
+
+     echo Nazev("Kraj&nbsp;-&nbsp;¹kolství");
+     echo Odkaz("k_forms.php", "Zpravodaj KÚ", "&typ=k_zpravodaj");
+     echo Odkaz("k_forms.php", "Smìrnice KÚ", "&typ=k_smernice");
+     echo Odkaz("k_forms.php", "Ostatní", "&typ=k_ostatni");
+ /*    echo Nazev("Suplování");
+     echo Odkaz("supl.php", "Zobrazit suplování");
+     echo Nazev("Oficiální sdìlení øeditele");
+     echo Odkaz("sdeleni.php", "Zobrazit sdìlení");
+     echo Nazev("Formuláøe pro uèitele");
+     echo Odkaz("forms.php", "Zobrazit&nbsp;formuláøe");
+     echo Nazev("Pro studenty");
+     echo Odkaz("povinnost.php", "Povinnosti studentù");  */
+  break;
+
+/* uèitel, externí uèitel, jidelna, ostatni zamestnanci */
+  case 5:
+     echo Odkaz("logout.php", "Odhlásit se z is");
+    /*echo Odkaz("help.php", "V¹echno o is");*/
+     echo Odkaz("is_main.php", "Novinky");
+     echo Nazev("Zamìstnanci");
+     echo Odkaz("ucitele.php", "Seznam zamìstnancù");
+     echo Odkaz("ucitele_udaje.php", "Opravit své údaje");  /* !!! nutno pozdeji opravit na ucitele_udaje_admin */
+     echo Nazev("Vzkazy");
+     echo Odkaz("vzkazy_vedeni.php", "Zobrazit vzkazy vedení");
+     echo Odkaz("vzkazy_komisi.php", "Zobrazit vzkazy PK");
+     echo Odkaz("vzkazy.php", "Zobrazit vzkazy");
+     echo Odkaz("vzkazy_odeslat.php", "Odeslat vzkaz");
+     echo Odkaz("vzkazy_editace.php", "Mnou odeslané vzkazy");
+     echo Nazev("Soubory");
+     echo Odkaz("soubory.php", "Zobrazit soubory");
+     echo Odkaz("soubory_odeslat.php", "Ulo¾it soubor");
+     echo Odkaz("soubory_editace.php", "Mnou ulo¾ené soubory");
+     echo Nazev("Plánování");
+     echo Odkaz_NewTarget("./is/rozvrh/rozvrh.htm", "Rozvrhy hodin");
+     echo Odkaz_NewTarget("./is/suplovani/suplov.htm", "Suplování");
+     echo Odkaz("plan_kal.php","Kalendáø akcí");
+     echo Odkaz("plan_uc.php","Zprávy pro vedení");
+     echo Odkaz("zvoneni.php", "Zvonìní");
+ /*    echo Nazev("Informaèní centrum");
+     echo Odkaz("ic.php", "IC");
+     echo Odkaz("ic_katalog_akt.php", "IC - aktualizace");    */
+     /*echo Odkaz("plan_kal_opr.php", "Zmìna tabulek kal.");*/
+     echo Nazev("Pro uèitele");
+     echo Odkaz("uc_forms.php", "V¹echny kategorie", "&typ=vse");
+     echo Odkaz("uc_forms.php", "Pokyny øeditele", "&typ=sdeleni_red");
+     echo Odkaz("uc_forms.php", "Pokyny zástupcù", "&typ=sdeleni_zast");
+     echo Odkaz("uc_forms.php", "Formuláøe pro uèitele", "&typ=formular");
+     echo Odkaz("uc_forms.php", "Seznamy studentù", "&typ=seznam");
+     echo Odkaz("uc_forms.php", "Vnitøní smìrnice", "&typ=smernice");
+     echo Odkaz("uc_forms.php", "Organizaèní&nbsp;zabezpeèení&nbsp;VVP", "&typ=organizace");
+     echo Odkaz("uc_forms.php", "Pracovní náplnì", "&typ=naplne");
+     echo Odkaz("uc_forms.php", "SRPG", "&typ=srpg");
+     echo Odkaz("uc_forms.php", "Ostatní", "&typ=ostatni");
+
+     echo Nazev("Pro studenty");
+     echo Odkaz("g_forms.php", "Vnitøní pøedpisy", "&typ=g_predpisy");
+     echo Odkaz("g_forms.php", "Formuláøe pro studenty", "&typ=g_formular");
+     echo Odkaz("g_forms.php", "Krou¾ky", "&typ=g_krouzky");
+     echo "Volitelné pøedmìty:<br>";
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Seznam pøedmìtù", "&typ=g_vol_seznam");
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Náplnì&nbsp;jednoletých&nbsp;pøedmìtù", "&typ=g_vol_naplne1");
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Náplnì&nbsp;dvouletých&nbsp;pøedmìtù", "&typ=g_vol_naplne2");
+     echo Odkaz("g_forms.php", "Ostatní", "&typ=g_ostatni");
+
+     echo Nazev("Kraj&nbsp;-&nbsp;¹kolství");
+     echo Odkaz("k_forms.php", "Zpravodaj KÚ", "&typ=k_zpravodaj");
+     echo Odkaz("k_forms.php", "Smìrnice KÚ", "&typ=k_smernice");
+     echo Odkaz("k_forms.php", "Ostatní", "&typ=k_ostatni");
+
+/*     echo Nazev("Formuláøe pro uèitele");
+     echo Odkaz("forms.php", "Zobrazit formuláøe");
+     echo Odkaz("forms_aktual.php", "Aktualizovat&nbsp;formuláøe");
+     echo Nazev("Pro studenty");
+     echo Odkaz("povinnost.php", "Povinnosti studentù");    */
+  break;
+
+/*     echo Nazev("Formuláøe pro uèitele");
+     echo Odkaz("forms.php", "Zobrazit formuláøe");
+     echo Odkaz("forms_aktual.php", "Aktualizovat&nbsp;formuláøe");
+     echo Nazev("Pro studenty");
+     echo Odkaz("povinnost.php", "Povinnosti studentù");    */
+
+/* studenti a ostatni */
+  default:
+      echo Odkaz("logout.php", "Odhlásit se z is");
+    /*echo Odkaz("help.php", "V¹echno o is");*/
+     echo Odkaz("is_main.php", "Novinky");
+     echo Nazev("Zamìstnanci");
+     echo Odkaz("ucitele.php", "Seznam zamìstnancù");
+     echo Nazev("Vzkazy");
+     echo Odkaz("vzkazy_vedeni.php", "Zobrazit vzkazy vedení");
+     echo Odkaz("vzkazy.php", "Zobrazit vzkazy");
+     echo Nazev("Soubory");
+     echo Odkaz("soubory.php", "Zobrazit soubory");
+     echo Nazev("Plánování");
+     echo Odkaz_NewTarget("./is/rozvrh/rozvrh.htm", "Rozvrhy hodin");
+     echo Odkaz_NewTarget("./is/suplovani/suplov.htm", "Suplování");
+     echo Odkaz("plan_kal.php","Kalendáø akcí");
+     echo Odkaz("zvoneni.php", "Zvonìní");
+  /*   echo Nazev("Informaèní centrum");
+     echo Odkaz("ic.php", "IC");
+     echo Odkaz("ic_katalog_akt.php", "IC - aktualizace");        */
+     /*echo Odkaz("plan_kal_opr.php", "Zmìna tabulek kal.");*/
+     echo Nazev("Pro studenty");
+     echo Odkaz("g_forms.php", "Vnitøní pøedpisy", "&typ=g_predpisy");
+     echo Odkaz("g_forms.php", "Formuláøe pro studenty", "&typ=g_formular");
+     echo Odkaz("g_forms.php", "Krou¾ky", "&typ=g_krouzky");
+     echo "Volitelné pøedmìty:<br>";
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Seznam pøedmìtù", "&typ=g_vol_seznam");
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Náplnì&nbsp;jednoletých&nbsp;pøedmìtù", "&typ=g_vol_naplne1");
+     echo Odkaz("g_forms.php", "<img src=\"./images/sip.gif\" border=\"0\">Náplnì&nbsp;dvouletých&nbsp;pøedmìtù", "&typ=g_vol_naplne2");
+     echo Odkaz("g_forms.php", "Ostatní", "&typ=g_ostatni");
+
+  /*   echo Nazev("Kraj&nbsp;-&nbsp;¹kolství");
+     echo Odkaz("k_forms.php", "Zpravodaj KÚ", "&typ=k_zpravodaj");
+     echo Odkaz("k_forms.php", "Smìrnice KÚ", "&typ=k_smernice");
+     echo Odkaz("k_forms.php", "Ostatní", "&typ=k_ostatni");
+   */
+
+/*     echo Nazev("Pro studenty");
+     echo Odkaz("supl.php", "Zobrazit&nbsp;suplování");
+     echo Odkaz("povinnost.php", "Povinnosti studentù");   */
+  break;
+
+endswitch;
+
+
+?>

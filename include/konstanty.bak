@@ -1,0 +1,5 @@
+<?
+define(c_Cesta, "http://isoa/is_gub/is/");
+define(c_Cesta2, "/var/www/html/isoa/is_gub/is/");
+define(c_Databaze, "is_data");
+?>
